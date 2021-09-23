@@ -55,7 +55,7 @@ const Portfolio = () => {
         style={{ transform: `translateX(-${currentSlide * 100}vw)` }}
       >
         {data.map((d) => (
-          <div className={styles.container}>
+          <div className={styles.container} key={d.id}>
             <div className={styles.item}>
               <div className={styles.left}>
                 <div className={styles.leftContainer}>
