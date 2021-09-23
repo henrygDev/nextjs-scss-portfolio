@@ -1,0 +1,22 @@
+.contact{
+  background-color: rgb(2, 5, 32);
+  color: #ececec;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.text{
+  font-size: 40px;
+  line-height: 125%;
+  a:hover{
+    color: rgb(253, 198, 198);
+  }
+}
+

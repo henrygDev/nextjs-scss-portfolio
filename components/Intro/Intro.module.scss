@@ -1,0 +1,28 @@
+.intro {
+  background-color: rgb(2, 5, 32);
+  color: #ececec;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 850px) {
+  .intro {
+    margin: 20px auto;
+  }
+}
+
+.text{
+  font-size: 9vw;
+  line-height: 0.8em;
+}
+
+.text em {
+  font-size: 3.5vw;
+}
