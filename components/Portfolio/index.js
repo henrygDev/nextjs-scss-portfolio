@@ -37,7 +37,7 @@ const Portfolio = () => {
       icon: "/GitHub-Mark-Light-32px.png",
       iconUrl: "https://github.com/henrygeez/js-todo-list",
       title: "JavaScript To-do List",
-      desc: "A simple to-do list on made with vanilla <strong>JavaScript</strong>. Has the features to check off items, remove items, save local list items, and clear all list items.",
+      desc: "A simple to-do list made with vanilla <strong>JavaScript</strong>. Has the features to check off items, remove items, save local list items, and clear all list items.",
       img: "/todo.png",
       url: "",
     },
