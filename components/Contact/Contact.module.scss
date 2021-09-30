@@ -1,3 +1,5 @@
+@import "../../styles/_mixins.scss";
+
 .contact{
   background-color: rgb(2, 5, 32);
   color: #ececec;
@@ -10,13 +12,28 @@
   -webkit-align-items: center;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+}
+
+.block{
+  flex: 40
 }
 
 .text{
   font-size: 40px;
-  line-height: 125%;
+  line-height: 130%;
   a:hover{
     color: rgb(253, 198, 198);
   }
+  flex: 60;
+
+  @include mobile {
+    font-size: 32px;
+  }
 }
 
+.footer{
+  align-self: flex-end;
+  flex: 1;
+  margin: 10px 10px;
+}
