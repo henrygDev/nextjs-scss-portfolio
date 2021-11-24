@@ -17,7 +17,7 @@ const Portfolio = () => {
     {
       id: "2",
       icon: "/GitHub-Mark-Light-32px.png",
-      iconUrl: "https://github.com/henrygeez/merng-social-app",
+      iconUrl: "https://github.com/henrygDev/merng-social-app",
       title: "MERNG Social Media App",
       desc: "A social media app built on the MERNG stack <strong>(MongoDB, Express, React, Node.JS, GraphQL)</strong> with the completed features of the database, server, login, registration, authentication <strong>(JWT)</strong>, post creation, post deletion, likes, and comments. Front-end is currently in progress.",
       img: "/merng.png",
@@ -26,7 +26,7 @@ const Portfolio = () => {
     {
       id: "3",
       icon: "/GitHub-Mark-Light-32px.png",
-      iconUrl: "https://github.com/henrygeez/react-rmdb",
+      iconUrl: "https://github.com/henrygDev/react-rmdb",
       title: "React Movie Database",
       desc: "Movie database based on <strong>React</strong>. Movie data was fetched through <strong>REST APIs</strong> from the The Movie Database and returned as <strong>JSON</strong> outputs.",
       img: "/react-rmdb.png",
@@ -35,7 +35,7 @@ const Portfolio = () => {
     {
       id: "4",
       icon: "/GitHub-Mark-Light-32px.png",
-      iconUrl: "https://github.com/henrygeez/js-todo-list",
+      iconUrl: "https://github.com/henrygDev/js-todo-list",
       title: "JavaScript To-do List",
       desc: "A simple to-do list made with vanilla <strong>JavaScript</strong>. Has the features to check off items, remove items, save local list items, and clear all list items.",
       img: "/todo.png",
