@@ -35,11 +35,11 @@ const Portfolio = () => {
     {
       id: "4",
       icon: "/GitHub-Mark-Light-32px.png",
-      iconUrl: "https://github.com/henrygDev/js-todo-list",
-      title: "JavaScript To-do List",
-      desc: "A simple to-do list made with vanilla <strong>JavaScript</strong>. Has the features to check off items, remove items, save local list items, and clear all list items.",
-      img: "/todo.png",
-      url: "",
+      iconUrl: "https://github.com/henrygDev/js-blackjack/",
+      title: "JavaScript Blackjack",
+      desc: "A Blackjack game written entirely from scratch, made with vanilla <strong>JavaScript</strong>. Players have a cash pool and can make bets for the main game, along with 3 common casino side bets.",
+      img: "/blackjack-demo.png",
+      url: "https://henry-blackjack.netlify.app/",
     },
   ];
 
