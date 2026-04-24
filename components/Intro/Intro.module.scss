@@ -13,10 +13,34 @@
 }
 
 .text{
-  font-size: 9vw;
-  line-height: 0.8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 880px;
+  padding: 0 24px;
 }
 
-.text em {
-  font-size: 3.5vw;
+.name {
+  margin: 0;
+  font-size: clamp(5.2rem, 8.8vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+.role {
+  margin: 18px 0 0;
+  font-size: clamp(1.4rem, 2.7vw, 2.2rem);
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(236, 236, 236, 0.78);
+}
+
+.summary {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  max-width: 760px;
+  margin-top: 34px;
+  color: rgba(236, 236, 236, 0.88);
 }
