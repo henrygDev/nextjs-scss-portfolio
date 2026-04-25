@@ -12,6 +12,11 @@ body {
   }
 }
 
+html.snap-paused,
+body.snap-paused {
+  scroll-snap-type: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;
