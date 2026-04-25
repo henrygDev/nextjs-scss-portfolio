@@ -10,7 +10,7 @@ const DRAG_START_THRESHOLD_PX = 12;
 const WHEEL_SWIPE_THRESHOLD = 140;
 const DESKTOP_BREAKPOINT = 768;
 
-const isDesktopSwipeDisabledArea = (event) =>
+const isSwipeDisabledArea = (event) =>
   window.innerWidth > DESKTOP_BREAKPOINT &&
   event.target instanceof Element &&
   event.target.closest('[data-swipe-disabled="desktop"]');
@@ -19,10 +19,17 @@ const isPortfolioControl = (event) =>
   event.target instanceof Element &&
   event.target.closest('[data-portfolio-control="true"]');
 
+const isInteractiveElement = (event) =>
+  event.target instanceof Element &&
+  event.target.closest(
+    'a, button, input, textarea, select, summary, [role="button"]'
+  );
+
 export const usePortfolioNavigation = (slideCount) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isSwipeInteracting, setIsSwipeInteracting] = useState(false);
   const pointerState = useRef({
     active: false,
     id: null,
@@ -60,6 +67,7 @@ export const usePortfolioNavigation = (slideCount) => {
     };
     setDragOffset(0);
     setIsDragging(false);
+    setIsSwipeInteracting(false);
   };
 
   const handlePointerDown = (event) => {
@@ -67,7 +75,11 @@ export const usePortfolioNavigation = (slideCount) => {
       return;
     }
 
-    if (isPortfolioControl(event)) {
+    if (
+      isPortfolioControl(event) ||
+      isInteractiveElement(event) ||
+      isSwipeDisabledArea(event)
+    ) {
       resetPointerState();
       return;
     }
@@ -80,6 +92,7 @@ export const usePortfolioNavigation = (slideCount) => {
       pointerType: event.pointerType,
       isDraggingHorizontally: false,
     };
+    setIsSwipeInteracting(true);
 
     if (event.currentTarget?.setPointerCapture) {
       event.currentTarget.setPointerCapture(event.pointerId);
@@ -90,8 +103,9 @@ export const usePortfolioNavigation = (slideCount) => {
     if (
       !pointerState.current.active ||
       pointerState.current.id !== event.pointerId ||
+      isInteractiveElement(event) ||
       isPortfolioControl(event) ||
-      isDesktopSwipeDisabledArea(event)
+      isSwipeDisabledArea(event)
     ) {
       return;
     }
@@ -173,7 +187,11 @@ export const usePortfolioNavigation = (slideCount) => {
   };
 
   const handleWheel = (event) => {
-    if (isDesktopSwipeDisabledArea(event) || isPortfolioControl(event)) {
+    if (
+      isSwipeDisabledArea(event) ||
+      isPortfolioControl(event) ||
+      isInteractiveElement(event)
+    ) {
       return;
     }
 
@@ -239,6 +257,7 @@ export const usePortfolioNavigation = (slideCount) => {
     showNextSlide,
     dragOffset,
     isDragging,
+    isSwipeInteracting,
     swipeHandlers: {
       onPointerDown: handlePointerDown,
       onPointerMove: handlePointerMove,

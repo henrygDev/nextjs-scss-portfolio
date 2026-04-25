@@ -11,8 +11,8 @@ const Contact = () => {
     <div ref={contactRef} className={styles.contact} id="contact">
       <div className={styles.block}></div>
       <div className={styles.text}>
-        <a href="mailto:henryyguan@gmail.com">Email<span></span></a><br/>
-        <a href="https://drive.google.com/file/d/1duC13Mz2B01_FieAFAimhMHd7RjnuAEK/view?usp=sharing">Resume</a><br/>
+        <a href="mailto:henryguan.dev@gmail.com">Email<span></span></a><br/>
+        <a href="https://drive.google.com/file/d/1jp1SVTm7lVamK8YShUpX0nw7sBRpgFjn">Resume</a><br/>
         <a href="https://www.linkedin.com/in/henryyguan">LinkedIn</a><br/>
         <a href="https://github.com/henrygDev">GitHub</a>
       </div>

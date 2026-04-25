@@ -176,6 +176,8 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          user-select: none;
+          -webkit-user-select: none;
 
           @include mobile{
             flex: none;
@@ -186,6 +188,17 @@
       }
     }
   }
+}
+
+.swipeInteracting {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.actions a,
+.demoFrame a {
+  user-select: auto;
+  -webkit-user-select: auto;
 }
 
 .progressGroup {

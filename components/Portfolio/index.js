@@ -22,6 +22,7 @@ const Portfolio = () => {
     showNextSlide,
     dragOffset,
     isDragging,
+    isSwipeInteracting,
     swipeHandlers,
   } = usePortfolioNavigation(portfolioItems.length);
 
@@ -51,7 +52,9 @@ const Portfolio = () => {
   return (
     <div
       ref={portfolioRef}
-      className={styles.portfolio}
+      className={`${styles.portfolio} ${
+        isSwipeInteracting ? styles.swipeInteracting : ""
+      }`}
       id="portfolio"
       tabIndex={0}
       {...swipeHandlers}
