@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import styles from "./Portfolio.module.scss";
 
 const Portfolio = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const pointerState = useRef({
+    active: false,
+    id: null,
+    startX: 0,
+    startY: 0,
+    hasNavigated: false,
+  });
+  const wheelState = useRef({
+    delta: 0,
+    timeoutId: null,
+    locked: false,
+  });
   const data = [
     {
       id: "1",
@@ -51,13 +63,157 @@ const Portfolio = () => {
     },
   ];
 
-  const handleClick = (dir) => {
-    dir === "left"
-      ? setCurrentSlide(currentSlide > 0 ? currentSlide - 1 : data.length - 1)
-      : setCurrentSlide(currentSlide < data.length - 1 ? currentSlide + 1 : 0);
+  const showPrevSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide > 0 ? prevSlide - 1 : data.length - 1
+    );
   };
+
+  const showNextSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide < data.length - 1 ? prevSlide + 1 : 0
+    );
+  };
+
+  const handleClick = (dir) => {
+    if (dir === "left") {
+      showPrevSlide();
+      return;
+    }
+
+    showNextSlide();
+  };
+
+  const resetPointerState = () => {
+    pointerState.current = {
+      active: false,
+      id: null,
+      startX: 0,
+      startY: 0,
+      hasNavigated: false,
+    };
+  };
+
+  const handlePointerDown = (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+
+    pointerState.current = {
+      active: true,
+      id: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      hasNavigated: false,
+    };
+  };
+
+  const handlePointerMove = (event) => {
+    if (
+      !pointerState.current.active ||
+      pointerState.current.id !== event.pointerId ||
+      pointerState.current.hasNavigated
+    ) {
+      return;
+    }
+
+    const deltaX = event.clientX - pointerState.current.startX;
+    const deltaY = event.clientY - pointerState.current.startY;
+
+    if (Math.abs(deltaX) < 60 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      return;
+    }
+
+    pointerState.current.hasNavigated = true;
+
+    if (deltaX > 0) {
+      showPrevSlide();
+      return;
+    }
+
+    showNextSlide();
+  };
+
+  const handlePointerUp = () => {
+    resetPointerState();
+  };
+
+  const handleWheel = (event) => {
+    const isHorizontalIntent =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY) ||
+      (event.shiftKey && Math.abs(event.deltaY) > 0);
+
+    if (!isHorizontalIntent || wheelState.current.locked) {
+      return;
+    }
+
+    const delta =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY;
+
+    wheelState.current.delta += delta;
+
+    if (wheelState.current.timeoutId) {
+      clearTimeout(wheelState.current.timeoutId);
+    }
+
+    wheelState.current.timeoutId = setTimeout(() => {
+      wheelState.current.delta = 0;
+      wheelState.current.timeoutId = null;
+    }, 180);
+
+    if (Math.abs(wheelState.current.delta) < 70) {
+      return;
+    }
+
+    event.preventDefault();
+    wheelState.current.locked = true;
+    wheelState.current.delta = 0;
+
+    if (delta < 0) {
+      showPrevSlide();
+    } else {
+      showNextSlide();
+    }
+
+    setTimeout(() => {
+      wheelState.current.locked = false;
+    }, 450);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showPrevSlide();
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showNextSlide();
+    }
+  };
+
   return (
-    <div className={styles.portfolio} id="portfolio">
+    <div
+      className={styles.portfolio}
+      id="portfolio"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+      onWheel={handleWheel}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
+      <div className={styles.gestureHint}>
+        <span className={styles.gestureIcon}>↔</span>
+        <span className={styles.gestureTextMobile}>Swipe projects</span>
+        <span className={styles.gestureTextDesktop}>
+          Drag, swipe, or trackpad sideways
+        </span>
+      </div>
       <div
         className={styles.slider}
         style={{ transform: `translateX(-${currentSlide * 100}vw)` }}
@@ -103,18 +259,34 @@ const Portfolio = () => {
           </div>
         ))}
       </div>
-      <img
-        src="/arrow.png"
+      <button
+        type="button"
         className={styles.leftArrow}
-        alt=""
+        aria-label="Show previous project"
         onClick={() => handleClick("left")}
-      />
-      <img
-        src="/arrow.png"
+      >
+        <img src="/arrow.png" alt="" />
+      </button>
+      <button
+        type="button"
         className={styles.rightArrow}
-        alt=""
+        aria-label="Show next project"
         onClick={() => handleClick()}
-      />
+      >
+        <img src="/arrow.png" alt="" />
+      </button>
+      <div className={styles.progress} aria-label={`Project ${currentSlide + 1} of ${data.length}`}>
+        {data.map((d, index) => (
+          <button
+            type="button"
+            key={d.id}
+            className={`${styles.progressDot} ${index === currentSlide ? styles.activeDot : ""}`}
+            aria-label={`Go to project ${index + 1}`}
+            aria-pressed={index === currentSlide}
+            onClick={() => setCurrentSlide(index)}
+          />
+        ))}
+      </div>
     </div>
   );
 };

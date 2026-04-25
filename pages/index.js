@@ -5,15 +5,14 @@ import Navbar from '../components/Navbar/index'
 import Portfolio from '../components/Portfolio/index'
 import Contact from '../components/Contact/index'
 
-
 export default function Home() {
   return (
     <>
-    <Head>
-      <title>Henry Guan</title>
-      <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet"/>
-    </Head>
-    <Navbar/>
+      <Head>
+        <title>Henry Guan</title>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet"/>
+      </Head>
+      <Navbar/>
       <div className="sections">
         <Intro/>
         <Portfolio/>
@@ -22,4 +21,3 @@ export default function Home() {
     </>
   )
 }
-
