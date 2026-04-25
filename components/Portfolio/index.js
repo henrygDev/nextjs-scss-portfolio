@@ -13,7 +13,7 @@ const Portfolio = () => {
       title: "Public Accounts of Canada 2019 Web Conversion",
       desc: "Led the Public Accounts of Canada 2019 Web Conversion Process among all interns, mentoring 6 interns over a 4-month period. Ensured over 5000 public-facing pages met <strong>accessibility</strong>, bilingual, and web standards best practices at scale.",
       img: "/PA2019.png",
-      url: "https://www.tpsgc-pwgsc.gc.ca/recgen/cpc-pac/2019/index-eng.html",
+      url: "https://epe.lac-bac.gc.ca/100/201/301/comptes_publics_can/html/2019/recgen/cpc-pac/2019/index-eng.html",
       cta: "View Project",
     },
     {
