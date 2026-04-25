@@ -45,3 +45,66 @@
   margin-top: 34px;
   color: rgba(236, 236, 236, 0.88);
 }
+
+.swipeCue {
+  position: absolute;
+  right: 26px;
+  bottom: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(236, 236, 236, 0.7);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+
+  @media (max-width: 768px) {
+    right: 18px;
+    bottom: 56px;
+    gap: 8px;
+    font-size: 0.62rem;
+  }
+}
+
+.swipeCueHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.swipeLabel {
+  line-height: 1;
+}
+
+.swipeTracks {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swipeArrow {
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid rgba(236, 236, 236, 0.72);
+  border-bottom: 2px solid rgba(236, 236, 236, 0.72);
+  transform: translateY(-2px) rotate(45deg);
+  animation: swipeCuePulse 1s ease-in-out infinite;
+}
+
+.swipeArrow:last-child {
+  animation-delay: 0.14s;
+}
+
+@keyframes swipeCuePulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(3px) rotate(45deg);
+  }
+}

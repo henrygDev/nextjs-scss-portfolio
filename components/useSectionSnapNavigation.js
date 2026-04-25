@@ -3,7 +3,10 @@ import { useEffect, useRef } from "react";
 const WHEEL_THRESHOLD = 1;
 const TOUCH_THRESHOLD = 12;
 const NAVIGATION_LOCK_MS = 700;
+const TOUCH_UNLOCK_DELAY_MS = 180;
 let navigationLockUntil = 0;
+let touchGestureLocked = false;
+let touchUnlockTimer = null;
 
 const isNavigationLocked = () => Date.now() < navigationLockUntil;
 const lockNavigation = () => {
@@ -56,6 +59,15 @@ export const useSectionSnapNavigation = (sectionRef, options = {}) => {
     };
 
     const handleTouchStart = (event) => {
+      if (touchUnlockTimer) {
+        window.clearTimeout(touchUnlockTimer);
+        touchUnlockTimer = null;
+      }
+
+      if (touchGestureLocked) {
+        return;
+      }
+
       touchStart.current = {
         x: event.touches[0]?.clientX ?? null,
         y: event.touches[0]?.clientY ?? null,
@@ -63,6 +75,11 @@ export const useSectionSnapNavigation = (sectionRef, options = {}) => {
     };
 
     const handleTouchMove = (event) => {
+      if (touchGestureLocked) {
+        event.preventDefault();
+        return;
+      }
+
       if (touchStart.current.x === null || touchStart.current.y === null) {
         return;
       }
@@ -80,6 +97,7 @@ export const useSectionSnapNavigation = (sectionRef, options = {}) => {
       }
 
       event.preventDefault();
+      touchGestureLocked = true;
 
       if (deltaY > 0) {
         navigateToSection(nextSectionId);
@@ -91,6 +109,15 @@ export const useSectionSnapNavigation = (sectionRef, options = {}) => {
 
     const clearTouchStart = () => {
       touchStart.current = { x: null, y: null };
+
+      if (touchUnlockTimer) {
+        window.clearTimeout(touchUnlockTimer);
+      }
+
+      touchUnlockTimer = window.setTimeout(() => {
+        touchGestureLocked = false;
+        touchUnlockTimer = null;
+      }, TOUCH_UNLOCK_DELAY_MS);
     };
 
     section.addEventListener("wheel", handleWheel, { passive: false });
@@ -102,13 +129,22 @@ export const useSectionSnapNavigation = (sectionRef, options = {}) => {
     });
     section.addEventListener("touchend", clearTouchStart);
     section.addEventListener("touchcancel", clearTouchStart);
+    window.addEventListener("touchend", clearTouchStart);
+    window.addEventListener("touchcancel", clearTouchStart);
 
     return () => {
+      if (touchUnlockTimer) {
+        window.clearTimeout(touchUnlockTimer);
+        touchUnlockTimer = null;
+      }
+
       section.removeEventListener("wheel", handleWheel);
       section.removeEventListener("touchstart", handleTouchStart);
       section.removeEventListener("touchmove", handleTouchMove);
       section.removeEventListener("touchend", clearTouchStart);
       section.removeEventListener("touchcancel", clearTouchStart);
+      window.removeEventListener("touchend", clearTouchStart);
+      window.removeEventListener("touchcancel", clearTouchStart);
     };
   }, [nextSectionId, previousSectionId, sectionRef]);
 };
