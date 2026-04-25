@@ -37,16 +37,12 @@ export const useDelayedScrollSnap = () => {
     }
 
     window.addEventListener('wheel', pauseSnap, { passive: true })
-    window.addEventListener('touchmove', pauseSnap, { passive: true })
-    window.addEventListener('scroll', pauseSnap, { passive: true })
     window.addEventListener('keydown', handleKeydown)
 
     return () => {
       window.clearTimeout(snapTimer)
       toggleSnapPause(false)
       window.removeEventListener('wheel', pauseSnap)
-      window.removeEventListener('touchmove', pauseSnap)
-      window.removeEventListener('scroll', pauseSnap)
       window.removeEventListener('keydown', handleKeydown)
     }
   }, [])

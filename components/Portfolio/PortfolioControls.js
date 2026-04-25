@@ -5,6 +5,7 @@ const PortfolioControls = ({ onPrev, onNext }) => (
     <button
       type="button"
       className={styles.leftArrow}
+      data-portfolio-control="true"
       aria-label="Show previous project"
       onClick={onPrev}
     >
@@ -13,6 +14,7 @@ const PortfolioControls = ({ onPrev, onNext }) => (
     <button
       type="button"
       className={styles.rightArrow}
+      data-portfolio-control="true"
       aria-label="Show next project"
       onClick={onNext}
     >

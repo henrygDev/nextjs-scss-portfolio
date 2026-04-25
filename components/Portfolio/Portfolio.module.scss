@@ -83,7 +83,7 @@
     display: flex;
     position: absolute;
     left: 0;
-    transition: all 0.8s ease;
+    transition: transform 0.55s ease;
 
     @media (max-height: 900px) and (min-width: 769px){
       height: 62vh;
@@ -95,6 +95,7 @@
 
     @include mobile{
       height: 78vh;
+      transition: transform 0.45s ease;
     }
 
     .container {
@@ -187,46 +188,53 @@
   }
 }
 
-.gestureHint {
+.progressGroup {
   position: absolute;
-  top: 96px;
+  bottom: 22px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1;
-  display: inline-flex;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  border: 1px solid rgba(236, 236, 236, 0.15);
-  border-radius: 999px;
-  background: rgba(6, 10, 45, 0.76);
-  backdrop-filter: blur(10px);
-  color: rgba(236, 236, 236, 0.92);
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  opacity: 1;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  gap: 8px;
 
   @include mobile{
-    top: 88px;
-    gap: 8px;
-    padding: 7px 10px;
-    font-size: 10px;
+    bottom: 14px;
+    gap: 6px;
   }
 }
 
-.gestureHintHidden {
-  opacity: 0;
-  transform: translate(-50%, -8px);
+.progressHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(236, 236, 236, 0.74);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+
+  @include mobile{
+    padding: 5px 8px;
+    font-size: 0.58rem;
+  }
 }
 
-.gestureIcon {
-  font-size: 1rem;
+.progressHintHidden {
+  opacity: 0;
+}
+
+.progressHintIcon {
+  font-size: 0.9rem;
   line-height: 1;
 }
 
-.gestureTextMobile {
+.progressHintMobile {
   display: none;
 
   @include mobile{
@@ -234,7 +242,7 @@
   }
 }
 
-.gestureTextDesktop {
+.progressHintDesktop {
   display: inline;
 
   @include mobile{
@@ -243,17 +251,11 @@
 }
 
 .progress {
-  position: absolute;
-  bottom: 26px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
   display: flex;
   align-items: center;
   gap: 10px;
 
   @include mobile{
-    bottom: 18px;
     gap: 8px;
   }
 }

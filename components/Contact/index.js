@@ -1,8 +1,14 @@
+import { useRef } from "react";
+
+import { useSectionSnapNavigation } from "../useSectionSnapNavigation";
 import styles from './Contact.module.scss';
 
 const Contact = () => {
+  const contactRef = useRef(null);
+  useSectionSnapNavigation(contactRef, { previousSectionId: "portfolio" });
+
   return (
-    <div className={styles.contact} id="contact">
+    <div ref={contactRef} className={styles.contact} id="contact">
       <div className={styles.block}></div>
       <div className={styles.text}>
         <a href="mailto:henryyguan@gmail.com">Email<span></span></a><br/>
